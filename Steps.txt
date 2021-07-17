@@ -1,0 +1,7 @@
+1. Turn a window into a matrix
+2. Write a solving algoirthm which can find an order for the problem
+3. Base on the order provided by the solving algorithm, click each tile.
+
+1. 首先，把连连看的图片变成matrix                                --完成
+2. 写一个程序可以把matrix清零                                   --完成
+3. 写一个程序可以用鼠标把应该点的地方点起来                       --完成
