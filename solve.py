@@ -4,6 +4,7 @@ import numpy as np
 columns = 19
 rows = 11
 
+# Check if the given matrix is a valid matrix by checking if everything is in pair
 def checkValid(matrix):
     valid = defaultdict(int)
     for i in range(len(matrix)):
@@ -18,6 +19,7 @@ def checkValid(matrix):
             return False
     return True
 
+# Creating a dictionary for each image. The key is a list of coordinates corresponding to that image.
 def create_dictionary(matrix):
     points = defaultdict(set)
     for x in range(len(matrix)):
@@ -26,6 +28,7 @@ def create_dictionary(matrix):
                 points[matrix[x][y]].add((x, y))
     return points
 
+# Checking if two points are connected in a matrix
 def checkConnection(matrix, pt1, pt2):
     y1, x1 = pt1
     y2, x2 = pt2
@@ -41,7 +44,9 @@ def checkConnection(matrix, pt1, pt2):
         big_y = max(y1, y2) - 1
         for col in range(columns):
             temp = matrix[small_y:big_y + 1, col:col+1]
-            if temp.size == 0:
+            # Find a column where everything in that column is 0
+            if temp.size == 0 or np.all(temp == 0):
+                # Check if the row from the current column to the points are 0
                 if x1 < col:
                     temp1 = matrix[y1: y1+1, x1+1: col+1]
                 elif x1 == col:
@@ -56,21 +61,37 @@ def checkConnection(matrix, pt1, pt2):
                     temp2 = matrix[y2: y2+1, col: x2]
                 if np.all(temp1 == 0) and np.all(temp2 == 0):
                     return True
-            elif np.all(temp == 0):
-                if x1 < col:
-                    temp1 = matrix[y1: y1+1, x1+1: col+1]
-                elif x1 == col:
-                    temp1 = np.array([0])
-                else:
-                    temp1 = matrix[y1: y1+1, col: x1]
-                if x2 < col:
-                    temp2 = matrix[y2: y2+1, x2+1: col+1]
-                elif x2 == col:
-                    temp2 = np.array([0])
-                else:
-                    temp2 = matrix[y2: y2+1, col: x2]
-                if np.all(temp1 == 0) and np.all(temp2 == 0):
-                    return True
+
+            # if temp.size == 0:
+            #     if x1 < col:
+            #         temp1 = matrix[y1: y1+1, x1+1: col+1]
+            #     elif x1 == col:
+            #         temp1 = np.array([0])
+            #     else:
+            #         temp1 = matrix[y1: y1+1, col: x1]
+            #     if x2 < col:
+            #         temp2 = matrix[y2: y2+1, x2+1: col+1]
+            #     elif x2 == col:
+            #         temp2 = np.array([0])
+            #     else:
+            #         temp2 = matrix[y2: y2+1, col: x2]
+            #     if np.all(temp1 == 0) and np.all(temp2 == 0):
+            #         return True
+            # elif np.all(temp == 0):
+            #     if x1 < col:
+            #         temp1 = matrix[y1: y1+1, x1+1: col+1]
+            #     elif x1 == col:
+            #         temp1 = np.array([0])
+            #     else:
+            #         temp1 = matrix[y1: y1+1, col: x1]
+            #     if x2 < col:
+            #         temp2 = matrix[y2: y2+1, x2+1: col+1]
+            #     elif x2 == col:
+            #         temp2 = np.array([0])
+            #     else:
+            #         temp2 = matrix[y2: y2+1, col: x2]
+            #     if np.all(temp1 == 0) and np.all(temp2 == 0):
+            #         return True
 
     # check horizontal
     if x1 == x2:
@@ -84,7 +105,9 @@ def checkConnection(matrix, pt1, pt2):
         big_x = max(x1, x2) - 1
         for row in range(rows):
             temp = matrix[row:row+1, small_x:big_x + 1]
-            if temp.size == 0:
+            # Find a row where everything is 0
+            if temp.size == 0 or np.all(temp == 0):
+                # Check if the column from the current row to the points are 0
                 if y1 < row:
                     temp1 = matrix[y1+1: row+1, x1: x1+1]
                 elif y1 == row:
@@ -99,23 +122,39 @@ def checkConnection(matrix, pt1, pt2):
                     temp2 = matrix[row: y2, x2: x2+1]
                 if np.all(temp1 == 0) and np.all(temp2 == 0):
                     return True
-            elif np.all(temp == 0):
-                if y1 < row:
-                    temp1 = matrix[y1+1: row+1, x1: x1+1]
-                elif y1 == row:
-                    temp1 = np.array([0])
-                else:
-                    temp1 = matrix[row: y1, x1: x1+1]
-                if y2 < row:
-                    temp2 = matrix[y2+1: row+1, x2: x2+1]
-                elif y2 == row:
-                    temp2 = np.array([0])
-                else:
-                    temp2 = matrix[row: y2, x2: x2+1]
-                if np.all(temp1 == 0) and np.all(temp2 == 0):
-                    return True
+            # if temp.size == 0:
+            #     if y1 < row:
+            #         temp1 = matrix[y1+1: row+1, x1: x1+1]
+            #     elif y1 == row:
+            #         temp1 = np.array([0])
+            #     else:
+            #         temp1 = matrix[row: y1, x1: x1+1]
+            #     if y2 < row:
+            #         temp2 = matrix[y2+1: row+1, x2: x2+1]
+            #     elif y2 == row:
+            #         temp2 = np.array([0])
+            #     else:
+            #         temp2 = matrix[row: y2, x2: x2+1]
+            #     if np.all(temp1 == 0) and np.all(temp2 == 0):
+            #         return True
+            # elif np.all(temp == 0):
+            #     if y1 < row:
+            #         temp1 = matrix[y1+1: row+1, x1: x1+1]
+            #     elif y1 == row:
+            #         temp1 = np.array([0])
+            #     else:
+            #         temp1 = matrix[row: y1, x1: x1+1]
+            #     if y2 < row:
+            #         temp2 = matrix[y2+1: row+1, x2: x2+1]
+            #     elif y2 == row:
+            #         temp2 = np.array([0])
+            #     else:
+            #         temp2 = matrix[row: y2, x2: x2+1]
+            #     if np.all(temp1 == 0) and np.all(temp2 == 0):
+            #         return True
     return False
 
+# Find a working order for the matrix
 def solution(matrix, points):
     order = []
     while points:
@@ -128,9 +167,10 @@ def solution(matrix, points):
                 if pt1 in used or pt2 in used:
                     continue
                 if checkConnection(matrix, pt1, pt2):
-                    
+                    # Adding to used to make sure not using two keys at the same time
                     used.add(pt1)
                     used.add(pt2)
+                    # Changing the used cells to 0
                     matrix[pt1[0]][pt1[1]] = 0
                     matrix[pt2[0]][pt2[1]] = 0
                     order.append(pt1)
@@ -150,6 +190,7 @@ def solve(matrix):
         print("This is not a valid matrix.")
         return
     points = create_dictionary(matrix)
+    print("Creating the order")
     order = solution(matrix, points)
     return order
                 
